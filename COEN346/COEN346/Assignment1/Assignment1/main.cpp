@@ -18,7 +18,7 @@ using namespace std;
 //find out number of elements in the input.txt
 int getFileLineCount(){
     string line;
-    ifstream myfile("/Users/lanceli/git/COEN346/COEN346/Assignment1/Assignment1/input.txt");
+    ifstream myfile("/Users/lanceli/git/OSlabs/COEN346/COEN346/Assignment1/Assignment1/input.txt");
     int filesize = 0;
     if (myfile.is_open())
     {
@@ -37,7 +37,7 @@ int getFileLineCount(){
 //populate arrayToPopulate with the input.txt
 void populateArray(int arrayToPopulate[]){
     string line;
-    ifstream myfile("/Users/lanceli/git/COEN346/COEN346/Assignment1/Assignment1/input.txt");
+    ifstream myfile("/Users/lanceli/git/OSlabs/COEN346/COEN346/Assignment1/Assignment1/input.txt");
     int filesize = 0;
     if (myfile.is_open())
     {
