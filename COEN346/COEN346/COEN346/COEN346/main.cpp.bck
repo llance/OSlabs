@@ -1,0 +1,119 @@
+//
+//  main.cpp
+//  COEN346
+//
+//  Created by Lance Li on 2016-01-19.
+//  Copyright © 2016 Lance Li. All rights reserved.
+//
+
+#include <iostream>
+#include <thread>
+#include <future>
+#include <mutex>
+#include <vector>
+
+using namespace std;
+
+
+//callable
+string replaceSpacebyBackslash(string argument){
+    for(char& c : argument) {
+        if (c == ' '){
+            c = '\\';
+        }
+        //cout<<c<<endl;
+    }
+    return argument;
+}
+
+//runnable
+void printstuff(string charsequence, bool sync)
+{
+    if (sync == true){
+        for(int i=0; i<5;i++){
+            future<string>futureanswer=async(replaceSpacebyBackslash, charsequence);
+            cout<< futureanswer.get()<<endl;
+        }
+    }
+    
+    if(sync == false){
+        for(int i=0; i<5;i++){
+            
+            replaceSpacebyBackslash(charsequence);
+            cout<<charsequence<<endl;
+        }
+    }
+    
+}
+
+void function1(vector<char> myvector){
+    cout<<"func 1 is a writer"<<endl;
+    vector<char> vectorToBeInserted = { 'W', 'o', 'r', 'l', 'd', '\0' };
+    myvector.push_back(vectorToBeInserted);
+}
+
+void function2(){
+    cout<<"func 2 is a reader"<<endl;
+
+}
+
+void function3(){
+    cout<<"func 3 is a reader "<<endl;
+}
+
+void function4(){
+    cout<<"func 4 is a reader"<<endl;
+}
+
+
+
+
+void funcWithLock(char arrayarg[]){
+    mutex mf2;
+    function1();
+    mf2.lock();
+    
+    function2();
+    
+    mf2.unlock();
+    function3();
+    
+
+}
+
+void function_to_be_executed_with_try_lock(){
+    mutex mf2;
+    
+    function1();
+    
+    if(mf2.try_lock()){
+        function2();
+        
+        mf2.unlock();
+    } else{
+        function4();
+    }
+    
+    function3();
+
+}
+
+
+int main(int argc, const char * argv[]) {
+    // insert code here...
+    std::cout << "Hello, World!\n";
+    
+    vector<char> myvector = { 'H', 'e', 'l', 'l', 'o', '\0' };
+    
+    
+    
+    
+    thread t1(printstuff, "he  l lo wo r l d ", true);
+    thread t2(printstuff, "he  l lo wo r l d ", false);
+    
+    t1.join();
+    t2.join();
+    return 0;
+}
+
+
