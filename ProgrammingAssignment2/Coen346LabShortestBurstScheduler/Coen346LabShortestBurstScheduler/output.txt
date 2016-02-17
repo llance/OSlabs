@@ -1,0 +1,11 @@
+Preemptive Scheduling:
+
+
+Executed pId: 1 - Duration left: 8 (ms) - Arrived: 0 (time unit)
+
+Executed pId: 2 - Duration left: 4 (ms) - Arrived: 1 (time unit)
+
+Executed pId: 4 - Duration left: 5 (ms) - Arrived: 3 (time unit)
+
+Executed pId: 3 - Duration left: 9 (ms) - Arrived: 2 (time unit)
+
