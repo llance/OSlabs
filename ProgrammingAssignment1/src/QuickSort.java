@@ -1,21 +1,19 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * Created by lanceli on 2016-01-26.
  */
 public class QuickSort implements Runnable {
     private int[] anArray;
+    private int low;
+    private int high;
 
-    public QuickSort(int[] anArray){
+    public QuickSort(int[] anArray, int low, int high){
         this.anArray = anArray;
-
+        this.low = low;
+        this.high = high;
     }
 
-
-
-
     private void quickSort(int[] arr, int low, int high) {
+        System.out.println("arr.length : " + arr.length + " int low is : " + low + " int high is : " + high);
         if (arr == null || arr.length == 0)
             return;
 
@@ -24,7 +22,6 @@ public class QuickSort implements Runnable {
 
         // pick the pivot
         int middle = low + (high - low) / 2;
-
         int pivot = arr[middle];
 
 
@@ -46,12 +43,20 @@ public class QuickSort implements Runnable {
                 i++;
                 j--;
             }
+
+
+        }
+        for (int x = 0; i < arr.length-1; x++) {
+            System.out.println("array is " + arr[x]);
         }
 
+
         // recursively sort two sub parts
+        //System.out.println("low is : " + low + " and j is : " + j);
+
         if (low < j) {
-            QuickSort myQuickSort = new QuickSort(arr);
-            Thread lowQsThread = new Thread(myQuickSort);
+            QuickSort myQuickSort = new QuickSort(arr, 0, j-1);
+            Thread lowQsThread = new Thread();
             lowQsThread.start();
             myQuickSort.getSortedArray();
             try {
@@ -63,8 +68,10 @@ public class QuickSort implements Runnable {
             }
         }
 
+        //System.out.println("high is : " + high + " and i is : " + i);
+
         if (high > i){
-            QuickSort myQuickSort = new QuickSort(arr);
+            QuickSort myQuickSort = new QuickSort(arr, i, arr.length-1);
             Thread highQsThread = new Thread(myQuickSort);
             highQsThread.start();
 
@@ -82,7 +89,8 @@ public class QuickSort implements Runnable {
 
     @Override
     public void run() {
-        quickSort(anArray, 0, anArray.length - 1);
+
+        quickSort(anArray, low, high);
     }
 
     public int[] getSortedArray(){
